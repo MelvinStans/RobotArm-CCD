@@ -6,12 +6,16 @@
 #define ROBOTARM_ARM_H
 
 #include "ArmSegment.h"
+#include "Eigen/Core"
+using Eigen::Vector2d;
+
 class Arm {
 public:
-    int segmentLengths[5];
+    int segmentLengths[3];
     int segmentCount;
-    ArmSegment armSegments[5];
+    ArmSegment armSegments[3];
     void generateArm();
+    void updateArm(Vector2d targetPoint);
     Arm(int[], int);
     Arm();
 };

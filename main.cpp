@@ -6,8 +6,8 @@
 #define HEIGHT 400
 
 int main() {
-    int slength[] = {50,50,50};
-    Arm arm(slength, 3);
+    int slength[] = {50,50};
+    Arm arm(slength, 2);
     arm.generateArm();
 
     sf::RenderWindow window(sf::VideoMode(HEIGHT, WIDTH), "RobotArm");
@@ -23,6 +23,12 @@ int main() {
 
         // clear the window with black color
         window.clear(sf::Color::Black);
+
+        // Get mouse pos
+        Vector2d mousePos = Vector2d(sf::Mouse::getPosition(window).x, HEIGHT-sf::Mouse::getPosition(window).y);
+
+        // calulate arm
+        arm.updateArm(mousePos);
 
         for (int i = 0; i < arm.segmentCount; ++i) {
             arm.armSegments[i].draw(&window);

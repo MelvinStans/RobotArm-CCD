@@ -3,6 +3,7 @@
 //
 
 #include "ArmSegment.h"
+#include <cmath>
 
 void ArmSegment::draw(sf::RenderWindow *window){
     sf::Vertex line[] =
@@ -18,9 +19,18 @@ ArmSegment::ArmSegment() {
     this->endPoint = Vector2d(0,0);
 }
 
-ArmSegment::ArmSegment(Vector2d bp, Vector2d ep) {
+ArmSegment::ArmSegment(Vector2d bp, double length, double angle) {
     this->beginPoint = bp;
-    this->endPoint = ep;
+    this->length = length;
+    calculateEndPoint(bp, length, angle);
+    this->angle = angle;
+}
+
+void ArmSegment::calculateEndPoint(Vector2d bp, double length, double angle) {
+    double y = (length * cos(angle)) + bp.y();
+    double x = (length * sin(angle)) + bp.x();
+    this->endPoint = Vector2d(x,y);
+    this->angle = angle;
 }
 
 
