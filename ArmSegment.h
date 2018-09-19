@@ -6,13 +6,17 @@
 #define ROBOTARM_ARMSEGMENT_H
 
 #include "Eigen/Core"
-using Eigen::Vector3d;
+#include <SFML/Graphics/RenderWindow.hpp>
+using Eigen::Vector2d;
 
 class ArmSegment {
 public:
-    float length;
-    Vector3d beginPoint;
-    Vector3d endPoint;
+//    int length;
+    Vector2d beginPoint;
+    Vector2d endPoint;
+    void draw(sf::RenderWindow *window);
+    ArmSegment();
+    ArmSegment(Vector2d, Vector2d);
 };
 
 #endif //ROBOTARM_ARMSEGMENT_H
