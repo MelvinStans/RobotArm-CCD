@@ -7,7 +7,10 @@
 
 #include "ArmSegment.h"
 #include "Eigen/Core"
+#include "Eigen/Geometry"
+
 using Eigen::Vector2d;
+using Eigen::Vector3d;
 
 class Arm {
 public:
@@ -15,7 +18,7 @@ public:
     int segmentCount;
     ArmSegment armSegments[3];
     void generateArm();
-    void updateArm(Vector2d targetPoint);
+    void updateArm(Vector3d targetPoint);
     Arm(int[], int);
     Arm();
 };

@@ -7,18 +7,20 @@
 
 #include "Eigen/Core"
 #include <SFML/Graphics/RenderWindow.hpp>
-using Eigen::Vector2d;
+using Eigen::Vector3d;
 
 class ArmSegment {
 public:
     double length;
     double angle;
-    Vector2d beginPoint;
-    Vector2d endPoint;
+    Vector3d beginPoint;
+    Vector3d endPoint;
     void draw(sf::RenderWindow *window);
-    void calculateEndPoint(Vector2d beginPoint, double length, double angle);
+    void calculateEndPoint(Vector3d beginPoint, double length, double angle);
+//    void calculateEndPointChild(Vector3d beginPoint,ArmSegment child, double length, double angle);
+    void move(Vector3d newBeginPoint);
     ArmSegment();
-    ArmSegment(Vector2d, double ,double);
+    ArmSegment(Vector3d, double ,double);
 };
 
 #endif //ROBOTARM_ARMSEGMENT_H

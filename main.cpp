@@ -25,10 +25,14 @@ int main() {
         window.clear(sf::Color::Black);
 
         // Get mouse pos
-        Vector2d mousePos = Vector2d(sf::Mouse::getPosition(window).x, HEIGHT-sf::Mouse::getPosition(window).y);
+        Vector3d mousePos;
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)){
+            mousePos = Vector3d(sf::Mouse::getPosition(window).x, HEIGHT-sf::Mouse::getPosition(window).y,0);
+            // calulate arm
+            std::cout<<"clicked"<<std::endl;
+            arm.updateArm(mousePos);
+        }
 
-        // calulate arm
-        arm.updateArm(mousePos);
 
         for (int i = 0; i < arm.segmentCount; ++i) {
             arm.armSegments[i].draw(&window);
