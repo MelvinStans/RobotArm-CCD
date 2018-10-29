@@ -14,12 +14,12 @@ using Eigen::Vector3d;
 
 class Arm {
 public:
-    int segmentLengths[3];
+    int segmentLength;
     int segmentCount;
     ArmSegment armSegments[3];
-    void generateArm();
+    void moveToPoint(Vector2d targetPoint);
     void updateArm(Vector3d targetPoint);
-    Arm(int[], int);
+    Arm(int segmentLength, int segmentCount);
     Arm();
 };
 

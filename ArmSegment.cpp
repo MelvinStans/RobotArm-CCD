@@ -17,27 +17,32 @@ void ArmSegment::draw(sf::RenderWindow *window){
 ArmSegment::ArmSegment() {
     this->beginPoint = Vector3d(0,0,0);
     this->endPoint = Vector3d(0,0,0);
+    this->angle=0;
+    this->length = 0;
 }
 
 ArmSegment::ArmSegment(Vector3d bp, double length, double angle) {
     this->beginPoint = bp;
     this->length = length;
-    calculateEndPoint(bp, length, angle);
     this->angle = angle;
+    this->cosAngle = cos(angle);
+    this->sinAngle = sin(angle);
+    calculateEndPoint(bp, angle);
 }
 
-void ArmSegment::calculateEndPoint(Vector3d bp, double length, double angle) {
-    double y = (length * cos(angle)) + bp.y();
-    double x = (length * sin(angle)) + bp.x();
+void ArmSegment::calculateEndPoint(Vector3d bp, double angle) {
+    double y = (this->length * cos(angle)) + bp.y();
+    double x = (this->length * sin(angle)) + bp.x();
     double z = 0;
     this->endPoint = Vector3d(x,y,z);
-    this->angle = angle;
 }
 
-//void ArmSegment::rotate(ArmSegment child, double angle){
-//    calculateEndPoint(this->beginPoint, this->length, angle);
-//    child.calculateEndPoint(this->endPoint, child.length, child.angle);
-//}
+void ArmSegment::calculateBeginPoint(Vector3d endPoint, double angle) {
+    double y = (this->length * tan(angle)) + endPoint.y();
+    double x = (this->length * cos(angle)) + endPoint.x();
+    double z = 0;
+    this->beginPoint = Vector3d(x,y,z);
+}
 
 void ArmSegment::move(Vector3d newPoint){
     // calc delta newpoint and current point
@@ -45,5 +50,9 @@ void ArmSegment::move(Vector3d newPoint){
     delta.x() = this->beginPoint.x() - newPoint.x();
     delta.y() = this->beginPoint.y() - newPoint.y();
     delta.z() = this->beginPoint.z() - newPoint.z();
+
+
+    this->beginPoint = newPoint;
+    this->endPoint = this->endPoint + delta;
 }
 

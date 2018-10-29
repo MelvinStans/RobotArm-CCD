@@ -6,42 +6,47 @@
 #define HEIGHT 400
 
 int main() {
-    int slength[] = {50,50};
-    Arm arm(slength, 2);
-    arm.generateArm();
+    Arm arm(50, 3);
 
     sf::RenderWindow window(sf::VideoMode(HEIGHT, WIDTH), "RobotArm");
+    Vector2d mousePos;
 
     while (window.isOpen()) {
-        // check all the window's events that were triggered since the last iteration of the loop
-        sf::Event event{};
-        while (window.pollEvent(event)) {
-            // "close requested" event: we close the window
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-
         // clear the window with black color
         window.clear(sf::Color::Black);
 
-        // Get mouse pos
-        Vector3d mousePos;
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)){
-            mousePos = Vector3d(sf::Mouse::getPosition(window).x, HEIGHT-sf::Mouse::getPosition(window).y,0);
-            // calulate arm
-            std::cout<<"clicked"<<std::endl;
-            arm.updateArm(mousePos);
+        // check all the window's events that were triggered
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            switch (event.type){
+                case sf::Event::Closed:
+                    window.close();
+                    break;
+
+                case sf::Event::MouseButtonReleased:
+                    if (event.mouseButton.button == sf::Mouse::Left) {
+                        std::cout << "the right button was pressed" << std::endl;
+                        std::cout << "mouse x: " << event.mouseButton.x << std::endl;
+                        std::cout << "mouse y: " << event.mouseButton.y << std::endl;
+                        mousePos = Vector2d(sf::Mouse::getPosition(window).x, HEIGHT - sf::Mouse::getPosition(window).y);
+                        arm.moveToPoint(mousePos);
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+
         }
 
-
+        // Draw the arm
         for (int i = 0; i < arm.segmentCount; ++i) {
             arm.armSegments[i].draw(&window);
         }
 
-        // end the current frame
+        // End the current frame and display
         window.display();
     }
-
-    return 0;
+    exit(0);
 }
 
